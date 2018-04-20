@@ -2,14 +2,12 @@
 
 Senior project
 
-- Requirement
-OpenCV library
+- Description : C++ software for colored object tracking robot
 
-- Input
-Image data from PC Camera or WebCam
+- Requirement : OpenCV library
 
-- Output
-Robot control message via RS232C serial communication
+- Input : Image data from PC Camera or WebCam
 
-- Demo video 
-https://youtu.be/MaFmA71aWF0
+- Output : Robot control message via RS232C serial communication
+
+- Demo video : https://youtu.be/MaFmA71aWF0
