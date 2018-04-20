@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# AvrStudio Solution File, Format Version 11.00
+Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "CMOScamera", "CMOScamera\CMOScamera.avrgccproj", "{A03E7B85-905B-4EC1-82F0-2771041760AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A03E7B85-905B-4EC1-82F0-2771041760AC}.Debug|AVR.ActiveCfg = Debug|AVR
+		{A03E7B85-905B-4EC1-82F0-2771041760AC}.Debug|AVR.Build.0 = Debug|AVR
+		{A03E7B85-905B-4EC1-82F0-2771041760AC}.Release|AVR.ActiveCfg = Release|AVR
+		{A03E7B85-905B-4EC1-82F0-2771041760AC}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
