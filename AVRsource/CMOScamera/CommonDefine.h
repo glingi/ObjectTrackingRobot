@@ -26,16 +26,14 @@ typedef unsigned int uint;
 // TIMER/COUNTER 
 ////////////////////////////////////////////////////////////
 
-#define PWM1_ON			(DDRB  |=   1 << PB3) //TIMER,COUNTER 0
-//#define	PWM1_OFF		(DDRB  &= ~(1 << PB3))
+#define PWM1_ON		(DDRB  |=   1 << PB3) //TIMER,COUNTER 0
 #define ENABLE_RIGHT	(PORTC |=   1 << PC0 )
 #define DISABLE_RIGHT	(PORTC &= ~(1 << PC0))
 #define RIGHT_DIR_FOR	(PORTC |=	1 << PC1 )
 #define RIGHT_DIR_BACK	(PORTC &= ~(1 << PC1))
  
-#define PWM2_ON			(DDRD  |=   1 << PD7 ) //TIMER,COUNTER2
-//#define	PWM2_OFF		(DDRD  &= ~(1 << PD7)) 
-#define ENABLE_LEFT		(PORTC |=   1 << PC2 )
+#define PWM2_ON		(DDRD  |=   1 << PD7 ) //TIMER,COUNTER2
+#define ENABLE_LEFT	(PORTC |=   1 << PC2 )
 #define DISABLE_LEFT	(PORTC &= ~(1 << PC2))
 #define LEFT_DIR_FOR	(PORTC |=   1 << PC3 )
 #define LEFT_DIR_BACK	(PORTC &= ~(1 << PC3))
@@ -65,8 +63,8 @@ enum {
 /*      (0,240)	   (320,240)
 /************************************************************************/
 
-#define IMAGE_WIDTH				320
-#define IMAGE_HEIGHT			240
+#define IMAGE_WIDTH		320
+#define IMAGE_HEIGHT		240
 #define midx			(IMAGE_WIDTH/2)
 #define midy			(IMAGE_HEIGHT/2)
 
@@ -86,7 +84,7 @@ enum {
 
 
 ////////////////////////////////////////////////////////////
-// ultrasonic sensor(사용안함)
+// ultrasonic sensor(unused)
 ////////////////////////////////////////////////////////////
 // 
 // #define TRIGGER_HIGH	PORTC |= (1<<PC4)
