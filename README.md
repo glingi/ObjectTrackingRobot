@@ -1,4 +1,4 @@
-# ObjectTrackingRobot_
+# Object Tracking Robot
 
 Senior project
 
