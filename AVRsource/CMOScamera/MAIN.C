@@ -4,11 +4,11 @@
  {
 	 //not used
 	 DDRA = 0X00;
-	 //¸ğÅÍÁ¦¾î
+	 //DC motor control
 	 DDRC = _BV(PC0) | _BV(PC1) | _BV(PC2) | _BV(PC3);
-	 //¼­º¸¸ğÅÍÀÇ PWM(PD5,PD4) °ú DC¸ğÅÍÀÇ PWM (PD7)
+	 //Servo motor : PWM(PD5,PD4) and DC motor PWM (PD7)
 	 DDRD = _BV(PD4) | (1 << PD5) | (1 << PD7) ;
-	 //DC¸ğÅÍ PWM OUTPUT PORT
+	 //DC motor PWM OUTPUT PORT
 	 DDRB = (1 << PB3);
 	
 	 PORTA = 0X00;
@@ -130,10 +130,11 @@
 						{
 							
 							right_motor = left_motor = 0X95;
-							if(get_servo_x_pos() >= 0) {  //·Îº¿ÀÌ ºÃÀ»¶§ ¹°Ã¼´Â ¿À¸¥ÂÊ ±×·¡¼­ ¿À¸¥ÂÊ ¸ğÅÍ ¼Óµµ¸¦ ÁÙ¿©¼­ È¸ÀüÀÌ °¡´ÉÇÏ°ÔÇÔ
+							if(get_servo_x_pos() >= 0) { 
+								//ë¡œë´‡ì´ ë´¤ì„ë•Œ ë¬¼ì²´ëŠ” ì˜¤ë¥¸ìª½ ê·¸ë˜ì„œ ì˜¤ë¥¸ìª½ ëª¨í„° ì†ë„ë¥¼ ì¤„ì—¬ì„œ íšŒì „ì´ ê°€ëŠ¥í•˜ê²Œí•¨
 								right_motor = right_motor +  (get_servo_x_pos() / motor_factor ) ;
 							}								
-							else {// ±×¹İ´ë
+							else {// ê·¸ë°˜ëŒ€
 								left_motor = left_motor -  ( get_servo_x_pos()  / motor_factor ) ;
 							}							
 							set_dcmotor_dir(CW,CW);
@@ -157,162 +158,3 @@
 	}	//while end
 	return 0;
 }
-
-
-//////////////////////////////////////////////////////////////////////////
-// SERVO MOTOR TEST SOURCE
-//////////////////////////////////////////////////////////////////////////
-/*
-		if(usart_unread_data() )
-		{
-			chData = usart_getc();
-			if(chData == 'A') {//DOWN
-				set_servo_x_pos( get_servo_x_pos() + nIndex);
-				set_servo_y_pos( get_servo_y_pos() + nIndex);	
-			}				
-			else if(chData == 'B'){// UP
-				set_servo_x_pos( get_servo_x_pos() -nIndex);
-				set_servo_y_pos( get_servo_y_pos() -nIndex);
-			}				
-			else if(chData == 'C'){
-				set_servo_x_pos( 0 );
-				set_servo_y_pos( 0 );
-			}				
-			else if(chData == '[')
-				{
-					nIndex++;
-					usart_puthex(nIndex);
-					usart_puts("\n");
-				}		
-			else if(chData == ']')
-				{
-					nIndex--;
-					if(nIndex <=0) nIndex =0;
-					usart_puthex(nIndex);
-					usart_puts("\n");
-				}			
-		}		
-*/
-//////////////////////////////////////////////////////////////////////////
-// DC MOTOR TEST SOURCE
-//////////////////////////////////////////////////////////////////////////
-/*
-	if(usart_unread_data()){
-		key = usart_getc();
-		switch(key){
-			case 'R':
-				usart_puts("turn_right\r");
-				turn_right(SS);
-				break;
-			case 'L':
-				usart_puts("turn_left\r");
-				turn_left(SS);
-				break;
-			case 'B':
-				usart_puts("back\r");
-				back(SS,SS);
-				break;
-			
-			case 'G':
-				usart_puts("go\r");
-				go(SS,SS);
-				break;
-				
-			case 'U':
-
-				usart_puts("current speed : \r");
-				SS = SS -2;
-				usart_puthex(SS);
-				usart_puts("\r");
-				break;
-			case 'D':
-				usart_puts("current speed : \r");
-				SS = SS +2;
-				usart_puthex(SS);
-				usart_puts("\r");
-				break;
-				
-			case 'S':
-				usart_puts("stop\r");
-				stop();
-				break;
-		
-			default:
-				break;
-		} // SWITCH END
-		
-	} //IF END
-	
-*/
-//////////////////////////////////////////////////////////////////////////
-// TIMER0 / TIMER2 TEST SOURCE2
-//////////////////////////////////////////////////////////////////////////
-
-/*
-		if(usart_unread_data() )
-		{
-			chData = usart_getc();
-			if(chData == 'D') //DOWN
-			{
-				set_dcmotor_speed( OCR0 + 1 , OCR2 +1);
-				usart_puthex(OCR0);
-				usart_puts("\n");
-			}				
-			else if(chData == 'U')// UP
-			{	
-				set_dcmotor_speed( OCR0 - 1, OCR2 -1);
-				usart_puthex(OCR0);
-				usart_puts("\n");
-			}				
-		}	
-		
-*/
-
-
-//////////////////////////////////////////////////////////////////////////
-// UltraSonic Sensor TEST not used
-//////////////////////////////////////////////////////////////////////////
-/*
-			ultrasoinc_timer_set_up();
-					
-			pluse_transmission();
-	//		d1 = (get_echo() * 0.0000005 * sound_velocity ) / 2;		<- timer1 
-	//		»ı°¢ÇÑ °Å¿Í ´Ù¸§.. 0.000004¿¡ 6¹è..
-												
-			distance  = ( ( get_echo() * 0.000024 ) * sound_velocity ) / 2; // timer 0
-			avg_distance = ( distance + d2 + d3 + d4 + d5 + d6 + d7 )/7;
-			d2=distance;
-			d3=d2;
-			d4=d3;
-			d5=d4;
-			d6=d5;
-			d7=d6;
-					
-			sprintf(string,"%d cm\r",avg_distance);		
-			usart_puts(string);
-			
-			
-			motorinit();
-			set_dcmotor_speed(SPEED,SPEED);
-			
-			_delay_ms(100);
-			if(avg_distance < 15){
-				set_dcmotor_direction(CCW,CCW);
-				usart_puts("BACK\r");
-				
-						
-			}else if( 15 <= avg_distance && avg_distance <= 50){
-						
-				usart_puts("STOP\r");	
-				set_dcmotor_direction(STAY,STAY);						
-			}else if(avg_distance > 50){
-				
-				set_dcmotor_direction(CW,CW);
-				usart_puts("GO\r");
-						
-			}
-
-
-			//_delay_ms(100);
-			
-*/			
