@@ -3,7 +3,7 @@
 #define CommonDefine_h__
 
 ////////////////////////////////////////////////////////////
-// 사용자 자료형 정의
+// Uesr defined datatype
 ////////////////////////////////////////////////////////////
 
 typedef unsigned char uchar ;
@@ -40,10 +40,10 @@ typedef unsigned int uint;
 #define LEFT_DIR_FOR	(PORTC |=   1 << PC3 )
 #define LEFT_DIR_BACK	(PORTC &= ~(1 << PC3))
 
-//역회전 OFFSET값
+//Reverse rotation OFFSET value
 #define OFFSET	0X0A
 
-//모터 방향
+//Motor direction
 enum {
 	CW,
 	CCW,
@@ -55,14 +55,14 @@ enum {
 //////////////////////////////////////////////////////////////////////////
 
 /************************************************************************/
-/*			입력 프레임 좌표값
+/*     Coordinates of input image 
 /*
 /*        (0,0)     (320,0)
 /*           ----------                                                                      
 /*           |        |
 /*           |        |
-/*			 ----------
-/*		  (0,240)	(320,240)
+/*	     ----------
+/*      (0,240)	   (320,240)
 /************************************************************************/
 
 #define IMAGE_WIDTH				320
@@ -70,7 +70,7 @@ enum {
 #define midx			(IMAGE_WIDTH/2)
 #define midy			(IMAGE_HEIGHT/2)
 
-//중심범위 설정 변수
+// Center range setting variable 
 #define range 15
 
 //x,y축 서보모터의 회전 속도 조절 변수
