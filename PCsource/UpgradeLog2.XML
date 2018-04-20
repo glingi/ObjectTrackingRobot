@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="ComConstructor">
+</Property><Property Name="Solution File" Value="C:\Users\sec\Documents\Visual Studio 2010\Projects\ComConstructor\ComConstructor.sln">
+</Property><Property Name="Date" Value="2011년 8월 10일 수요일">
+</Property><Property Name="Time" Value="오전 0:38:25">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="0" Project="ImagePro" Source="..\..\..\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcproj" Description="Converting project file 'C:\Users\sec\Documents\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcproj'.">
+</Event><Event ErrorLevel="1" Project="ImagePro" Source="..\..\..\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="ImagePro" Source="..\..\..\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcproj" Description="Done converting to new project file 'C:\Users\sec\Documents\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="ImagePro" Source="..\..\..\4학년 1학기\DSP\DSP_ExperimentalImage\ImagePro\ImagePro\ImagePro.vcproj" Description="Converted">
+</Event></UpgradeLog>
