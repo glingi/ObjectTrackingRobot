@@ -1,4 +1,4 @@
-# Object Tracking Robot
+# Color Tracking Robot
 
 Senior project
 
