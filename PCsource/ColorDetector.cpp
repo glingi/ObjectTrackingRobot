@@ -5,20 +5,20 @@
 
 using namespace cv;
 
-//π∞√º¿« ¡§∫∏∏¶ AVR∑Œ ¿¸º€«œ±‚ ¿ß«— «‘ºˆ.
+// transfer information of object to AVR 
 void ColorDetector::Transfer(cv::Point opt, int size)
 {
-	//∏ﬁ¿Œ«¡∑π¿”¿« ∆˜¿Œ≈Õ∏¶ æÚæÓø¬¥Ÿ.
+	// Î©îÏù∏ÌîÑÎ†àÏûÑÏùò Ìè¨Ïù∏ÌÑ∞Î•º ÏñªÏñ¥Ïò®Îã§.
 	CMainFrame* pMainFrame	= (CMainFrame*)AfxGetMainWnd();
 	
-	//¡˜∑ƒ≈ÎΩ≈ ∆˜∆Æ∞° ø¨∞·µ«æ˙¥¬¡ˆ »Æ¿Œ
+	// Check serial commuication port
 	if (pMainFrame->m_Serial.IsOpen())
 	{	
 		//char ch = static_cast<char>('A');
-		//∞°¥…
+		//Í∞ÄÎä•
 		//pMainFrame->m_Serial.Write("Hello",5);
 		//pMainFrame->m_Serial.Write(&pointMark,5);
-		//µ•¿Ã≈Õ ∆–≈∂¿« Ω√¿€~
+		//Îç∞Ïù¥ÌÑ∞ Ìå®ÌÇ∑Ïùò ÏãúÏûë~
 		pMainFrame->m_Serial.Write("B",1);
 		
 		_itoa_s(opt.x,temp,10);
@@ -41,24 +41,24 @@ void ColorDetector::Transfer(cv::Point opt, int size)
 cv::Mat ColorDetector::process(const cv::Mat &image){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//					ø©∑Ø »ø∞˙∞° ¿˚øÎµ» ¿ÃπÃ¡ˆ∏¶ ¿˙¿Â«“ ∞¯∞£
+//					Ïó¨Îü¨ Ìö®Í≥ºÍ∞Ä Ï†ÅÏö©Îêú Ïù¥ÎØ∏ÏßÄÎ•º Ï†ÄÏû•Ìï† Í≥µÍ∞Ñ
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	result.create(image.rows, image.cols, CV_8UC3);
 	binary.create(image.rows, image.cols, CV_8U);
 	
-	//ªÛ≈¬πŸø° √ﬂ¿˚¡°∞˙ contourªÁ¿Ã¡ˆ∏¶ ≥™≈¬≥ªæÓ ¡÷±‚ ¿ß«ÿ ∏ﬁ¿Œ«¡∑π¿”¿« ∆˜¿Œ≈Õ∏¶ æÚæÓø¬¥Ÿ.
+	// ÏÉÅÌÉúÎ∞îÏóê Ï∂îÏ†ÅÏ†êÍ≥º contourÏÇ¨Ïù¥ÏßÄÎ•º ÎÇòÌÉúÎÇ¥Ïñ¥ Ï£ºÍ∏∞ ÏúÑÌï¥ Î©îÏù∏ÌîÑÎ†àÏûÑÏùò Ìè¨Ïù∏ÌÑ∞Î•º ÏñªÏñ¥Ïò®Îã§.
 	CMainFrame* pMainFrame	= (CMainFrame*)AfxGetMainWnd();
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//						« ≈Õ∏µ ∫Œ∫–
+//						filtering section
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//median« ≈Õ∑Œ ¿‚¿Ω ¡¶∞≈
+	// remove noise using median filter
 	cv::medianBlur(binary, binary ,9);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//						¿Ã¡¯»≠ ∫Œ∫–
+//						binarization section
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
@@ -112,18 +112,18 @@ cv::Mat ColorDetector::process(const cv::Mat &image){
 		if (itc->size() < cmin || itc->size() > cmax)
 			itc= contours.erase(itc);
 		else {
-			//π∞√º¡÷¿ßø° ªÁ∞¢«¸¿ª ±◊∑¡¡‹
+			// Draw box around the object 
 			object_rect = cv::boundingRect(cv::Mat(*itc)); 
-			//ªÁ∞¢«¸¿« ≈©±‚∞ËªÍ
+			// cacluate the size of box
 			object_size = (object_rect.height * object_rect.width)/50;
 			cv::rectangle(result,object_rect,cv::Scalar(255,255,0),2);
 
-			//ªÛ≈¬πŸø° ¡§∫∏«•Ω√∏¶ «œ±‚¿ß«— ∫ØºˆµÈ
+			// variables to display status bar 
 	
 			// compute all moments
 			cv::Moments mom= cv::moments(cv::Mat(*itc));
 		
-			//¡ﬂΩ…¡° ±◊∏Æ±‚
+			// draw center point 
 			cv::Point pt(mom.m10/mom.m00 , mom.m01/mom.m00); 
 			// draw mass center
 			cv::circle(result,
@@ -132,157 +132,25 @@ cv::Mat ColorDetector::process(const cv::Mat &image){
 						2,cv::Scalar(0,255,255),2); // draw dot
 		
 	
-			//ªÛ≈¬πŸø° π∞√º¿« ¡ﬂΩ…¡° ≥™≈∏≥ª±‚
+			// cetner position of the object in status bar
 			if(pt.x >=0 && pt.y >=0 )
 			{
 				strText.Format(_T("( %d, %d)"), pt.x, pt.y);
 				pMainFrame->m_wndStatusBar.SetPaneText(0,strText);
 			}
 		
-			//ªÛ≈¬πŸø° π∞√º¿« ªÁ¿Ã¡Ó ≥™≈∏≥ª±‚
+			// size of the object in status bar
 			if(itc->size() ){
 				strText2.Format(_T(" %d"), object_size );
 				pMainFrame->m_wndStatusBar.SetPaneText(1,strText2);
 			}
 		
-			//¡ﬂΩ…¡°¿« x,y¡¬«•øÕ π∞√º¿« ªÁ¿Ã¡Ó∏¶ avr∑Œ ¿¸º€
+			// Transfer x, y coordinate and size of the object to AVR
 			ColorDetector::Transfer(pt , object_size);
 	
-
 			++itc;
 		}
 	}
 	
 	return result;
 }
-
-
-
-/*
-	// draw contours
-	cv::drawContours(result,contours,
-		-1,			 // draw all contours
-		cv::Scalar(200),		 // 
-		2);			 // with a thickness of 2
-*/
-
-
-/*
-	// testing the bounding box 
-	cv::Rect r0= cv::boundingRect(cv::Mat(contours[0]));
-	cv::rectangle(result,r0,cv::Scalar(0),2);
-
-	// testing the enclosing circle 
-	float radius;
-	cv::Point2f center;
-	cv::minEnclosingCircle(cv::Mat(contours[1]),center,radius);
-	cv::circle(result,cv::Point(center),static_cast<int>(radius),cv::Scalar(0),2);
-
-//	cv::RotatedRect rrect= cv::fitEllipse(cv::Mat(contours[1]));
-//	cv::ellipse(result,rrect,cv::Scalar(0),2);
-
-	// testing the approximate polygon
-
-	std::vector<cv::Point> poly;
-	itc = contours.begin();
-
-	for(; itc != contours.end() ; ++itc){
-		cv::approxPolyDP(cv::Mat(contours[2]),poly,5,true);
-
-		// Iterate over each segment and draw it
-		std::vector<cv::Point>::const_iterator itp= poly.begin();
-		while (itp!=(poly.end()-1)) {
-			cv::line(out,*itp,*(itp+1),cv::Scalar(0),2);
-			++itp;
-		}
-		// last point linked to first point
-		cv::line(out,
-				*(poly.begin()),
-				*(poly.end()-1),cv::Scalar(20),2);
-	}
-	*/
-
-//cv::Mat result(image.size(),CV_8UC3,cv::Scalar(5,255,255));
-
-/*
-	itc = contours.begin();
-	while (itc!=contours.end()) {
-		//π∞√º¡÷¿ßø° ªÁ∞¢«¸¿ª ±◊∑¡¡‹
-		object_rect = cv::boundingRect(cv::Mat(*itc)); 
-		//ªÁ∞¢«¸¿« ≈©±‚∞ËªÍ
-		object_size = (object_rect.height * object_rect.width)/50;
-		cv::rectangle(result,object_rect,cv::Scalar(255,255,0),2);
-		++itc;
-	}
-
-	*/
-	// iterate over all contours
-	/*
-	itc= contours.begin();
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	// ¡ﬂΩ…¡° ±◊∏Æ±‚
-	///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	while (itc!=contours.end()) {
-
-		//ªÛ≈¬πŸø° √ﬂ¿˚¡°∞˙ contourªÁ¿Ã¡ˆ∏¶ ≥™≈¬≥ªæÓ ¡÷±‚ ¿ß«ÿ ∏ﬁ¿Œ«¡∑π¿”¿« ∆˜¿Œ≈Õ∏¶ æÚæÓø¬¥Ÿ.
-		CMainFrame* pMainFrame	= (CMainFrame*)AfxGetMainWnd();
-		//ªÛ≈¬πŸø° ¡§∫∏«•Ω√∏¶ «œ±‚¿ß«— ∫ØºˆµÈ
-	
-		// compute all moments
-		cv::Moments mom= cv::moments(cv::Mat(*itc));
-		
-		//¡ﬂΩ…¡° ±◊∏Æ±‚
-		cv::Point pt(mom.m10/mom.m00 , mom.m01/mom.m00); 
-		// draw mass center
-			cv::circle(result,
-			// position of mass center converted to integer
-			pt,
-			2,cv::Scalar(0,255,255),2); // draw dot
-		
-	
-		//ªÛ≈¬πŸø° π∞√º¿« ¡ﬂΩ…¡° ≥™≈∏≥ª±‚
-		if(pt.x >=0 && pt.y >=0 )
-		{
-			strText.Format(_T("( %d, %d)"), pt.x, pt.y);
-			pMainFrame->m_wndStatusBar.SetPaneText(0,strText);
-		}
-		
-		//ªÛ≈¬πŸø° π∞√º¿« ªÁ¿Ã¡Ó ≥™≈∏≥ª±‚
-		if(itc->size() ){
-			strText2.Format(_T(" %d"), object_size );
-			pMainFrame->m_wndStatusBar.SetPaneText(1,strText2);
-		}
-		
-		//¡ﬂΩ…¡°¿« x,y¡¬«•øÕ π∞√º¿« ªÁ¿Ã¡Ó∏¶ avr∑Œ ¿¸º€
-		ColorDetector::Transfer(pt , object_size );
-		itc++;
-
-	}
-	*/
-
-
-	//¡ª¥ı º±∏Ì«— ∞·∞˙∏¶ ¿ß«ÿ
-	//2011.8.6
-	// Mopology operation ø° ¥Î«ÿ..
-
-	//Eroding can eliminate very small objects("noisy");
-	//cv::Mat element(3,3,CV_8U, cv::Scalar(1)); //3x3 structuring element is applied
-	//cv::erode(result,eroded,element); /// in-place processing
-	
-	//anthor way
-	//Eliminate noise and smaller objects
-	//cv::erode(result, result, cv::Mat(), cv:Point(-1,-1,),3);
-	//cv::Point(-1,-1) means that the origin is at the center of the matrix(default)
-
-	// Dilating can larger some of the "holes" 
-	// Opening is defined as the dilation of the erosion of an image
-	// Opening filter removes the small blobs(¿€¿∫ ªˆ ∫Œ∫–µÈ) 
-
-
-	//cv::Mat element5(5,5,CV_8U,cv::Scalar(1));
-	//these operators are said to be idempotent.
-
-	//cv::morphologyEx(out, out , cv::MORPH_OPEN,element5);
-	//cv::getStructuringElement( MORPH_RECT , Size( 3, 3 ), Point( 1,1 ) ) );
